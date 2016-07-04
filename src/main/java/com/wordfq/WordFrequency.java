@@ -27,9 +27,8 @@ public class WordFrequency {
         try {
             logger.info("Loading Queries...");
             queriesLoader.loadFile("queries.txt");
-            logger.info("Loading records...");
+            logger.info("Loading Records...");
             recordsLoader.loadFile("records.txt");
-            logger.info("End Loading files");
 
             //print results
             printResults();
@@ -40,9 +39,12 @@ public class WordFrequency {
     }
 
     /**
-     * Printing queries results
+     * Printing queries results. in order (as result is a TreeMap).
      */
     private static void printResults() {
+        System.out.println("Results:");
+        System.out.println("--------");
+
         Gson gson = new Gson();
         QueryResultContainer.getInstance().getComponents().forEach(
                 c -> System.out.println(gson.toJson(c.getResult())));

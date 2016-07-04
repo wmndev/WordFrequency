@@ -29,4 +29,11 @@ public class QueryResultContainer {
     public List<QueryResultComponentImpl> getComponents() {
         return components;
     }
+
+    /**
+     * clear all components (testing purposes)
+     */
+    public void clear() {
+        components = new LinkedList<>();
+    }
 }

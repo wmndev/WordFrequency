@@ -4,6 +4,7 @@ import com.wordfq.service.builder.QueryEntityBuilder;
 import com.wordfq.service.builder.RecordEntityBuilder;
 import com.wordfq.service.container.QueryResultContainer;
 import com.wordfq.service.processor.QueryEntityProcessor;
+import com.wordfq.service.processor.RecordEntityProcessor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by wiseman on 7/4/16.
+ * Created by wiseman on 7/1/16.
  */
 public class TestBuildersAndProcess {
 
@@ -25,6 +26,7 @@ public class TestBuildersAndProcess {
 
     @Before
     public void beforeTest() {
+        QueryResultContainer.getInstance().clear();
         data = new HashSet<>();
         data.add("apple");
         data.add("cat");
@@ -54,5 +56,16 @@ public class TestBuildersAndProcess {
 
         List<QueryResultComponentImpl> items = QueryResultContainer.getInstance().getComponents();
         assertThat(items.size(), is(1));
+    }
+
+    @Test
+    public void testRecordEntityProcessor() {
+        QueryResultContainer.getInstance().clear();
+
+        RecordEntityProcessor rep = new RecordEntityProcessor();
+        rep.process(dataEntity);
+
+        //no queries
+        assertThat(QueryResultContainer.getInstance().getComponents().size(), is(0));
     }
 }

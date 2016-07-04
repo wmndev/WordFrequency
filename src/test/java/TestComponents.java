@@ -18,12 +18,11 @@ public class TestComponents {
     HashSet<String> data;
 
     @Before
-    public void runBeforeTestMethod() {
+    public void runBeforeTestMethods() {
         data = new HashSet<>();
         data.add("apple");
         data.add("cat");
         data.add("ball");
-
     }
 
     @Test

@@ -50,19 +50,24 @@ public class BufferLoaderService extends AbstractFileLoader {
                 int size = list.size();
                 int cut = size / CUT_SIZE;
 
+                //---
+                //Diving the lines processing into 3 separated async callbacks
+                //---
                 ExecutorService es = Executors.newFixedThreadPool(FIXED_THREAD_POOL_SIZE);
                 try {
-
+                    logger.info("Executing callback Futures");
                     Future<Integer> fut1 = es.submit(() -> compute(list.subList(0, cut)));
 
                     Future<Integer> fut2 = es.submit(() -> compute(list.subList(cut, 2 * cut)));
 
                     Future<Integer> fut3 = es.submit(() -> compute(list.subList(2 * cut, size)));
 
-                    while (!fut1.isDone() &&
-                            !fut2.isDone() &&
+                    while (!fut1.isDone() ||
+                            !fut2.isDone() ||
                             !fut3.isDone()) {
+
                         //waiting to all promises to end
+                        logger.debug("Future 1:" + fut1.isDone() + "|Future2:" + fut2.isDone() + "|Future3:" + fut3.isDone());
                     }
                     logger.info("All Futures returned...");
 
