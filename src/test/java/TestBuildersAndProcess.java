@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by wiseman on 7/4/16.
  */
-public class TestProcess {
+public class TestBuildersAndProcess {
 
     HashSet<String> data;
     QueryResultComponentImpl qrc;
