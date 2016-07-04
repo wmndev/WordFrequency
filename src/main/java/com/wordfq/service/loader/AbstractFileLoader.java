@@ -12,7 +12,9 @@ import java.io.IOException;
 public abstract class AbstractFileLoader implements FileLoaderService {
 
     protected EntityBuilder builder = null;
+
     protected EntityProcessor processor = null;
+
     protected String fileName;
 
     public AbstractFileLoader(EntityBuilder builder, EntityProcessor processor) {
@@ -23,13 +25,22 @@ public abstract class AbstractFileLoader implements FileLoaderService {
     @Override
     public void loadFile(String fileName) throws IOException {
         this.fileName = fileName;
-
-        try {
-            perform();
-        } catch (IOException e) {
-            throw new FileLoaderException("Couldn't load: " + fileName, e);
+        if (preProcessValidation()) {
+            try {
+                perform();
+            } catch (IOException e) {
+                throw new FileLoaderException("Couldn't load: " + fileName, e);
+            }
         }
     }
+
+    /**
+     * Option to perform pre file processing validation (e.g. filename, file suffix, etc.)
+     */
+    protected boolean preProcessValidation() {
+        return true;
+    }
+
 
     protected abstract void perform() throws IOException;
 }

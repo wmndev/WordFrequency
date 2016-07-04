@@ -26,7 +26,7 @@ public class QueryResultComponentImpl implements QueryResultComponent {
     }
 
     @Override
-    public void updateResult(String word) {
+    public synchronized void updateResult(String word) {
         //updating result map with the current word counter
         result.compute(word,
                 (k, v) -> v == null ? 1 : ++v);
